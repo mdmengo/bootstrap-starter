@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules/
+
+# Build folder
+build/
+src/css/
+
+package-lock.json

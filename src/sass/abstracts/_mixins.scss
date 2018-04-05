@@ -1,0 +1,200 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+
+// Clearfix mixin
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: ' ';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+/// Mixin helper to output vendor-prefixed CSS
+/// @access private
+/// @author HugoGiraudel
+/// @param {String} $property - Unprefixed CSS property
+/// @param {*} $value - Raw CSS value
+/// @param {List} $prefixes [()] - List of prefixes to output
+@mixin prefix($property, $value, $prefixes: ()) {
+  @each $prefix in $prefixes {
+    -#{$prefix}-#{$property}: $value;
+  }
+
+  #{$property}: $value;
+}
+
+/// Event wrapper
+/// @author Harry Roberts
+/// @param {Bool} $self [false] - Whether or not to include current selector
+/// @link https://twitter.com/csswizardry/status/478938530342006784 Original tweet from Harry Roberts
+@mixin on-event($self: false) {
+  @if $self {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  } @else {
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+}
+
+/// Make a context based selector a little more friendly
+/// @author Hugo Giraudel
+/// @param {String} $context
+@mixin when-inside($context) {
+  #{$context} & {
+    @content;
+  }
+}
+
+// Sizing shortcuts
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// CSS image replacement
+@mixin text-hide() {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+// Text truncate
+// Requires inline-block or block for proper styling
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Generate contrast color based on background
+// @author Xavier Bertels
+// https://codepen.io/xavez/pen/KvYMdg
+@mixin text-color($c1) {
+  @if (.2126*red($c1) + .7152*green($c1) + .0722*blue($c1))/255 <= .5 {
+    color: #fff;
+  } @else {
+    color: #000;
+  }
+}
+
+/// Horizontally centers block elements
+/// @access public
+/// @example scss - Usage
+///   .foo {
+///     @include center-block;
+///   }
+/// @example css - Result
+///   .foo {
+///     display: block;
+///     margin-left: auto;
+///     margin-right: auto;
+///   }
+@mixin center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/// Horizontally and vertically centers block elements
+/// Important: you must have a parent element with `position: relative`.
+/// @access public
+/// @example scss - Usage
+///   .foo {
+///     @include center-both;
+///   }
+/// @example css - Result
+///   .foo {
+///     position: absolute;
+///     top: 50%;
+///     left: 50%;
+///     -webkit-transform: translate(-50%, -50%);
+///     -ms-transform: translate(-50%, -50%);
+///     transform: translate(-50%, -50%);
+///   }
+@mixin center-both {
+  @include prefix(transform, translate(-50%, -50%), 'webkit' 'ms');
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+/// Vertically centers block elements with known height.
+/// @access public
+/// @param {Length} $height - Element's height
+/// @example scss - Usage
+///   .foo {
+///     @include center-h(42px);
+///   }
+/// @example css - Result
+///   .foo {
+///     position: absolute;
+///     top: 50%;
+///     height: 42px;
+///     margin-top: -21px;
+///   }
+@mixin center-h($height) {
+  position: absolute;
+  top: 50%;
+  height: $height;
+  margin-top: -($height / 2);
+}
+
+/// Vertically centers block elements with unknown height.
+/// @access public
+/// @example scss - Usage
+///   .foo {
+///     @include center-h--unk;
+///   }
+/// @example css - Result
+///   .foo {
+///     position: relative;
+///     top: 50%;
+///     -webkit-transform: translateY(-50%);
+///     -ms-transform: translateY(-50%);
+///     transform: translateY(-50%);
+///   }
+@mixin center-h--unk {
+  @include prefix(transform, translateY(-50%), 'webkit' 'ms');
+  position: relative;
+  top: 50%;
+}
+
+// Position mixins
+@mixin position($position, $args) {
+  @each $o in top right bottom left {
+    $i: index($args, $o);
+    @if $i and $i + 1 <= length($args) and type-of(nth($args, $i + 1)) == number {
+      #{$o}: nth($args, $i + 1);
+    }
+  }
+  position: $position;
+}
+
+// Positioning helpers
+@mixin absolute($args: '') {
+  @include position(absolute, $args);
+}
+
+@mixin fixed($args: '') {
+  @include position(fixed, $args);
+}
+
+@mixin relative($args: '') {
+  @include position(relative, $args);
+}
