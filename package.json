@@ -30,7 +30,7 @@
     "start": "npm-run-all -p css-watch js-build sync",
     "build": "npm run css-deploy && node build-script.js && npm run copy"
   },
-  "author": "mdmengo",
+  "author": "dmarchese",
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.0.0"
