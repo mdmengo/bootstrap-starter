@@ -26,7 +26,9 @@
     "sass-lint": "sass-lint -c .sass-lint.yml -v -q",
     "sync": "browser-sync start --directory --server --files \"src/**/*.css, src/**/*.html, src/**/*.js\" --https",
     "js-build": "babel src/js/main.js --out-file src/js/main-compiled.js --source-maps --watch",
-    "start": "npm-run-all -p css-watch js-build sync"
+    "copy": "cp ./src/*.html ./build/ && cp -r ./src/img/ ./build/",
+    "start": "npm-run-all -p css-watch js-build sync",
+    "build": "npm run css-deploy && node build-script.js && npm run copy"
   },
   "author": "mdmengo",
   "license": "MIT",
