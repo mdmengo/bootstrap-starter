@@ -22,7 +22,7 @@
     "css-deploy": "npm run css-build && npm run css-postcss",
     "css-build": "node-sass src/sass/main.scss src/css/main.css --source-map true --output-style expanded",
     "css-watch": "npm run css-build -- --watch",
-    "css-postcss": "postcss src/css/main.css -c postcss.config.js -o build/css/main.min.css",
+    "css-postcss": "postcss src/css/main.css -c postcss.config.js -o build/css/main.css",
     "sass-lint": "sass-lint -c .sass-lint.yml -v -q",
     "sync": "browser-sync start --directory --server --files \"src/**/*.css, src/**/*.html, src/**/*.js\" --https",
     "js-build": "babel src/js/main.js --out-file src/js/main-compiled.js --source-maps --watch",
