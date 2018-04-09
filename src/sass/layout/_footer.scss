@@ -15,14 +15,11 @@
     @include child('nav') {
 
       @include child('item') {
-        &:after {
+        &:not(:last-child) span:after {
           content: " | ";
           color: theme-color(info);
           margin-left: $space-xs;
           margin-right: $space-xs;
-        }
-        &:last-child:after {
-          content: "";
         }
         a {
           color: theme-color(info);
