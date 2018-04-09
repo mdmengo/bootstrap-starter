@@ -1,3 +1,58 @@
 // -----------------------------------------------------------------------------
 // This file contains all styles related to the footer of the site/application.
 // -----------------------------------------------------------------------------
+@include block('footer-page'){
+  box-shadow: inset 0 1px 0 theme-color(primary),
+              inset 0 3px 0 $white,
+              inset 0 5px 0 theme-color(primary);
+  margin: $space-xs 0;
+  padding: $space-m 0;
+  font-size: .75rem;
+
+  @include child('other-links') {
+    color: theme-color(info);
+
+    @include child('nav') {
+
+      @include child('item') {
+        &:after {
+          content: " | ";
+          color: theme-color(info);
+          margin-left: $space-xs;
+          margin-right: $space-xs;
+        }
+        &:last-child:after {
+          content: "";
+        }
+        a {
+          color: theme-color(info);
+        }
+      }
+
+    }
+  }
+
+  @include child('nav-links') {
+    a {
+      padding: $space-xs $space-m $space-xs 0;
+      color: theme-color(info);
+
+      @include media-breakpoint-up(md) {
+        padding: $space-xs $space-m;
+      }
+    }
+  }
+
+  @include child('social') {
+    padding: $space-stack-m;
+
+    .nav > li > a {
+      margin-right: $space-s;
+      display: inline-block;
+    }
+  }
+
+  @include child('copyright') {
+    padding: $space-stack-m;
+  }
+}

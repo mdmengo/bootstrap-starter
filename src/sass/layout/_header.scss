@@ -1,3 +1,47 @@
 // -----------------------------------------------------------------------------
 // This file contains all styles related to the header of the site/application.
 // -----------------------------------------------------------------------------
+@include block('header-page'){
+  box-shadow: inset 0 1px 0 theme-color(primary),
+              inset 0 3px 0 $white,
+              inset 0 5px 0 theme-color(primary);
+  margin: $space-xs 0;
+  padding: $space-m 0;
+
+  @include child('right') {
+    a {
+      text-transform: uppercase;
+    }
+    // form {
+    //   display: none;
+    // }
+  }
+
+  @include child('lang') {
+    .active {
+      font-weight: bold;
+    }
+    span:not(:last-child):after {
+      content: " / ";
+      color: theme-color(primary);
+      font-weight: normal;
+    }
+  }
+  .logo {
+    @include text-hide;
+  }
+}
+
+
+.search-form--mobile {
+  flex: 1 1 0;
+
+  input {
+    flex: 1 1 0;
+    margin-right: $space-s;
+  }
+
+  @include media-breakpoint-up(md) {
+    flex: inherit;
+  }
+}
